@@ -31,5 +31,62 @@ public class Substacao {
 	@Column(name = "NOME", length = 100)
 	private String nome;
 	
+	@Column(name ="LATITUDE", precision = 15, scale = 13, nullable = false )
+	private double latitude;
+	
+	@Column(name = "LONGITUDE", precision = 15, scale = 13)
+	private Double LONGITUDE;
+
+	public Substacao(int idSubstacao, String codigo, String nome, double latitude, Double lONGITUDE) {
+		super();
+		this.idSubstacao = idSubstacao;
+		this.codigo = codigo;
+		this.nome = nome;
+		this.latitude = latitude;
+		LONGITUDE = lONGITUDE;
+	}
+
+	public int getIdSubstacao() {
+		return idSubstacao;
+	}
+
+	public void setIdSubstacao(int idSubstacao) {
+		this.idSubstacao = idSubstacao;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLONGITUDE() {
+		return LONGITUDE;
+	}
+
+	public void setLONGITUDE(Double lONGITUDE) {
+		LONGITUDE = lONGITUDE;
+	}
+	
+	
+	
 	
 }
