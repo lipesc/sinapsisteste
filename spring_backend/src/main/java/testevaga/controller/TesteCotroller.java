@@ -22,13 +22,5 @@ public class TesteCotroller {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 		
 	}
-	
-	@GetMapping
-	public ResponseEntity<Integer>  msg() {
-		
-		String  response = "testando";
-		
-		Integer num = 1;
-		return new ResponseEntity<>(num, HttpStatus.CREATED);
-	}
+
 }
