@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,4 +37,52 @@ public class RedeMT {
 	
 	@Column(name = "TENSAO_NOMINAL", precision = 5, scale = 2)
 	private double tensaoNominal;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_SUBESTACAO", nullable = false)
+	private Substacao substacao;
+
+	public RedeMT() {}
+	
+	public RedeMT(int idRedeMt, String codigo, String nome, double tensaoNominal) {
+		super();
+		this.idRedeMt = idRedeMt;
+		this.codigo = codigo;
+		this.nome = nome;
+		this.tensaoNominal = tensaoNominal;
+	}
+
+	public int getIdRedeMt() {
+		return idRedeMt;
+	}
+
+	public void setIdRedeMt(int idRedeMt) {
+		this.idRedeMt = idRedeMt;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public double getTensaoNominal() {
+		return tensaoNominal;
+	}
+
+	public void setTensaoNominal(double tensaoNominal) {
+		this.tensaoNominal = tensaoNominal;
+	}
+	
+	
 }

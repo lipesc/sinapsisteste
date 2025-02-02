@@ -1,11 +1,16 @@
 package testevaga.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.annotation.Nonnull;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -37,7 +42,12 @@ public class Substacao {
 	@Column(name = "LONGITUDE", precision = 15, scale = 13)
 	private Double longitude;
 	
+	@OneToMany(mappedBy = "substacao", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<RedeMT> redesMT = new ArrayList<RedeMT>();
+	
+	
 	public Substacao() {}
+	
 	
 	public Substacao(int idSubstacao, String codigo, String nome, double latitude, Double longitude) {
 		super();
@@ -48,6 +58,7 @@ public class Substacao {
 		this.longitude = longitude;
 	}
 
+	
 	public int getIdSubstacao() {
 		return idSubstacao;
 	}
