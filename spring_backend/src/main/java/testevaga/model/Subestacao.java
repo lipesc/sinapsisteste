@@ -1,5 +1,6 @@
 package testevaga.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,20 +16,13 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_SUBESTACAO")
-public class Substacao {
-/*
- * ID_SUBESTACAO int(11) NOT NULL AUTO_INCREMENT, 
- *CODIGO        varchar(3) NOT NULL UNIQUE, 
- *NOME          varchar(100), 
- *LATITUDE      decimal(15, 13) NOT NULL, 
- *LONGITUDE     decimal(15, 13), 
- *PRIMARY KEY (ID_SUBESTACAO)); 
- * */
+public class Subestacao {
+
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_SUBESTACAO", length = 11)
-	private int idSubstacao;
+	@Column(name = "ID_SUBESTACAO")
+	private Integer idSubestacao;
 	
 	@Column(name = "CODIGO", length = 3, nullable = false, unique = true)
 	private String codigo;
@@ -37,21 +31,21 @@ public class Substacao {
 	private String nome;
 	
 	@Column(name ="LATITUDE", precision = 15, scale = 13, nullable = false )
-	private double latitude;
+	private BigDecimal latitude;
 	
 	@Column(name = "LONGITUDE", precision = 15, scale = 13)
-	private Double longitude;
+	private BigDecimal longitude;
 	
-	@OneToMany(mappedBy = "substacao", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "subestacao", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<RedeMT> redesMT = new ArrayList<RedeMT>();
 	
 	
-	public Substacao() {}
+	public Subestacao() {}
 	
 	
-	public Substacao(int idSubstacao, String codigo, String nome, double latitude, Double longitude) {
+	public Subestacao(Integer idSubestacao, String codigo, String nome, BigDecimal latitude, BigDecimal longitude) {
 		super();
-		this.idSubstacao = idSubstacao;
+		this.idSubestacao = idSubestacao;
 		this.codigo = codigo;
 		this.nome = nome;
 		this.latitude = latitude;
@@ -59,12 +53,12 @@ public class Substacao {
 	}
 
 	
-	public int getIdSubstacao() {
-		return idSubstacao;
+	public Integer getIdSubstacao() {
+		return idSubestacao;
 	}
 
-	public void setIdSubstacao(int idSubstacao) {
-		this.idSubstacao = idSubstacao;
+	public void setIdSubstacao(Integer idSubestacao) {
+		this.idSubestacao = idSubestacao;
 	}
 
 	public String getCodigo() {
@@ -83,19 +77,19 @@ public class Substacao {
 		this.nome = nome;
 	}
 
-	public double getLatitude() {
+	public BigDecimal getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude;
 	}
 
-	public Double getLONGITUDE() {
+	public BigDecimal getLONGITUDE() {
 		return longitude;
 	}
 
-	public void setLONGITUDE(Double longitude) {
+	public void setLONGITUDE(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
 	

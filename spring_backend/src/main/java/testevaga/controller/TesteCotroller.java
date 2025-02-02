@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import testevaga.model.Substacao;
-import testevaga.service.SubstacaoService;
+import testevaga.model.Subestacao;
+import testevaga.service.SubestacaoService;
 
 @RestController
 @RequestMapping("/testando")
 public class TesteCotroller {
-	private SubstacaoService substacaoService;
+	private SubestacaoService substacaoService;
 	
 	
-	public TesteCotroller(SubstacaoService substacaoService) {
+	public TesteCotroller(SubestacaoService substacaoService) {
 		this.substacaoService = substacaoService;
 	}
 
 
 	@GetMapping
-	public List<Substacao> listTodas() {
+	public List<Subestacao> listTodas() {
 		return substacaoService.listarTodas();
 	}
 

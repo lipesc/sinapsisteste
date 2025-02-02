@@ -1,5 +1,7 @@
 package testevaga.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -9,12 +11,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 @Configuration
 public class DataSourceConfig {
 	
-	@Bean(name = "h2Data")
-	@ConfigurationProperties(prefix = "spring.datasource")
-	DataSourceAutoConfiguration h2Data() {
-		return new DataSourceAutoConfiguration();
-	}
-	
-	
-	
+	@Bean(name = "h2DataSource")
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public DataSource h2DataSource() {
+        return new DriverManagerDataSource();
+    
+}
 }

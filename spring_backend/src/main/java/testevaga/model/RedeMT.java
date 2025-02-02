@@ -1,5 +1,7 @@
 package testevaga.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,22 +14,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "TB_REDE_MT")
 public class RedeMT {
-	/*
-	 * CREATE TABLE TB_REDE_MT (
-	 * ID_REDE_MT     int(11) NOT NULL AUTO_INCREMENT, 
-	 * ID_SUBESTACAO  int(11) NOT NULL, 
-	 * CODIGO         varchar(5) NOT NULL UNIQUE, 
-	 * NOME           varchar(100), 
-	 * TENSAO_NOMINAL decimal(5, 2), 
-	 * PRIMARY KEY (ID_REDE_MT));
-	 * ALTER TABLE TB_REDE_MT ADD CONSTRAINT 
-	 * FK_SUBESTACAO_REDE_MT FOREIGN KEY (ID_SUBESTACAO) 
-	 * REFERENCES TB_SUBESTACAO (ID_SUBESTACAO) ON DELETE Cascade; 
-	 * */
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_REDE_MT")
-	private int idRedeMt;
+	private Integer idRedeMt;
 	
 	@Column(name = "CODIGO", nullable = false, length = 5, unique = true)
 	private String codigo;
@@ -36,53 +27,60 @@ public class RedeMT {
 	private String nome;
 	
 	@Column(name = "TENSAO_NOMINAL", precision = 5, scale = 2)
-	private double tensaoNominal;
+	private BigDecimal tensaoNominal;
 	
 	@ManyToOne
 	@JoinColumn(name = "ID_SUBESTACAO", nullable = false)
-	private Substacao substacao;
+	private Subestacao subestacao;
 
 	public RedeMT() {}
 	
-	public RedeMT(int idRedeMt, String codigo, String nome, double tensaoNominal) {
-		super();
-		this.idRedeMt = idRedeMt;
-		this.codigo = codigo;
-		this.nome = nome;
-		this.tensaoNominal = tensaoNominal;
-	}
+	public RedeMT(Integer idRedeMt, String codigo, String nome, BigDecimal tensaoNominal, Subestacao subestacao) {
+        this.idRedeMt = idRedeMt;
+        this.codigo = codigo;
+        this.nome = nome;
+        this.tensaoNominal = tensaoNominal;
+        this.subestacao = subestacao;
+    }
+    public Integer getIdRedeMt() {
+        return idRedeMt;
+    }
 
-	public int getIdRedeMt() {
-		return idRedeMt;
-	}
+    public void setIdRedeMt(Integer idRedeMt) {
+        this.idRedeMt = idRedeMt;
+    }
 
-	public void setIdRedeMt(int idRedeMt) {
-		this.idRedeMt = idRedeMt;
-	}
+    public String getCodigo() {
+        return codigo;
+    }
 
-	public String getCodigo() {
-		return codigo;
-	}
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public BigDecimal getTensaoNominal() {
+        return tensaoNominal;
+    }
 
-	public double getTensaoNominal() {
-		return tensaoNominal;
-	}
+    public void setTensaoNominal(BigDecimal tensaoNominal) {
+        this.tensaoNominal = tensaoNominal;
+    }
 
-	public void setTensaoNominal(double tensaoNominal) {
-		this.tensaoNominal = tensaoNominal;
-	}
+    public Subestacao getSubstacao() {
+        return subestacao;
+    }
+
+    public void setSubstacao(Subestacao subestacao) {
+        this.subestacao = subestacao;
+    }
 	
 	
 }
