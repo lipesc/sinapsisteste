@@ -1,43 +1,23 @@
 <script setup>
-import { ref } from 'vue'
+import { defineProps } from 'vue';
 
-defineProps({
-  msg: String,
-})
-
-const count = ref(0)
+const props = defineProps({
+  substacoes: Array
+});
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
+  <div v-if="substacoes.length">
+    <div v-for="substacao in substacoes" :key="substacao.idSubstacao">
+      <p>{{ substacao.codigo }} - {{ substacao.nome }}</p>
+      <p>Latitude: {{ substacao.latitude }}</p>
+      <p>Longitude: {{ substacao.longitude }}</p>
+    </div>
   </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <div v-else>
+    <p>No data available</p>
+  </div>
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
-}
 </style>

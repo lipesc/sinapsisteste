@@ -1,474 +1,629 @@
 diff --git a/difGIT.txt b/difGIT.txt
-index 5e55f6d..e69de29 100644
+index 7a300f5..e69de29 100644
 --- a/difGIT.txt
 +++ b/difGIT.txt
-@@ -1,443 +0,0 @@
--diff --git a/spring_backend/src/main/java/testevaga/config/DataSourceConfig.java b/spring_backend/src/main/java/testevaga/config/DataSourceConfig.java
--index ea87fc9..2aa5e8a 100644
----- a/spring_backend/src/main/java/testevaga/config/DataSourceConfig.java
--+++ b/spring_backend/src/main/java/testevaga/config/DataSourceConfig.java
--@@ -1,5 +1,7 @@
-- package testevaga.config;
-- 
--+import javax.sql.DataSource;
--+
-- import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-- import org.springframework.boot.context.properties.ConfigurationProperties;
-- import org.springframework.context.annotation.Bean;
--@@ -9,12 +11,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
-- @Configuration
-- public class DataSourceConfig {
-- 	
---	@Bean(name = "h2Data")
---	@ConfigurationProperties(prefix = "spring.datasource")
---	DataSourceAutoConfiguration h2Data() {
---		return new DataSourceAutoConfiguration();
---	}
---	
---	
---	
--+	@Bean(name = "h2DataSource")
--+    @ConfigurationProperties(prefix = "spring.datasource")
--+    public DataSource h2DataSource() {
--+        return new DriverManagerDataSource();
--+    
-- }
--+}
--\ No newline at end of file
--diff --git a/spring_backend/src/main/java/testevaga/controller/TesteCotroller.java b/spring_backend/src/main/java/testevaga/controller/TesteCotroller.java
--index 71c9d71..910643c 100644
----- a/spring_backend/src/main/java/testevaga/controller/TesteCotroller.java
--+++ b/spring_backend/src/main/java/testevaga/controller/TesteCotroller.java
--@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.GetMapping;
-- import org.springframework.web.bind.annotation.RequestMapping;
-- import org.springframework.web.bind.annotation.RestController;
-- 
---import testevaga.model.Substacao;
---import testevaga.service.SubstacaoService;
--+import testevaga.model.Subestacao;
--+import testevaga.service.SubestacaoService;
-- 
-- @RestController
-- @RequestMapping("/testando")
-- public class TesteCotroller {
---	private SubstacaoService substacaoService;
--+	private SubestacaoService substacaoService;
-- 	
-- 	
---	public TesteCotroller(SubstacaoService substacaoService) {
--+	public TesteCotroller(SubestacaoService substacaoService) {
-- 		this.substacaoService = substacaoService;
-- 	}
-- 
-- 
-- 	@GetMapping
---	public List<Substacao> listTodas() {
--+	public List<Subestacao> listTodas() {
-- 		return substacaoService.listarTodas();
-- 	}
-- 
--diff --git a/spring_backend/src/main/java/testevaga/model/RedeMT.java b/spring_backend/src/main/java/testevaga/model/RedeMT.java
--index 5f187a2..631b1d2 100644
----- a/spring_backend/src/main/java/testevaga/model/RedeMT.java
--+++ b/spring_backend/src/main/java/testevaga/model/RedeMT.java
--@@ -1,5 +1,7 @@
-- package testevaga.model;
-- 
--+import java.math.BigDecimal;
--+
-- import jakarta.persistence.Column;
-- import jakarta.persistence.Entity;
-- import jakarta.persistence.GeneratedValue;
--@@ -12,22 +14,11 @@ import jakarta.persistence.Table;
-- @Entity
-- @Table(name = "TB_REDE_MT")
-- public class RedeMT {
---	/*
---	 * CREATE TABLE TB_REDE_MT (
---	 * ID_REDE_MT     int(11) NOT NULL AUTO_INCREMENT, 
---	 * ID_SUBESTACAO  int(11) NOT NULL, 
---	 * CODIGO         varchar(5) NOT NULL UNIQUE, 
---	 * NOME           varchar(100), 
---	 * TENSAO_NOMINAL decimal(5, 2), 
---	 * PRIMARY KEY (ID_REDE_MT));
---	 * ALTER TABLE TB_REDE_MT ADD CONSTRAINT 
---	 * FK_SUBESTACAO_REDE_MT FOREIGN KEY (ID_SUBESTACAO) 
---	 * REFERENCES TB_SUBESTACAO (ID_SUBESTACAO) ON DELETE Cascade; 
---	 * */
--+
-- 	@Id
-- 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-- 	@Column(name = "ID_REDE_MT")
---	private int idRedeMt;
--+	private Integer idRedeMt;
-- 	
-- 	@Column(name = "CODIGO", nullable = false, length = 5, unique = true)
-- 	private String codigo;
--@@ -36,53 +27,60 @@ public class RedeMT {
-- 	private String nome;
-- 	
-- 	@Column(name = "TENSAO_NOMINAL", precision = 5, scale = 2)
---	private double tensaoNominal;
--+	private BigDecimal tensaoNominal;
-- 	
-- 	@ManyToOne
-- 	@JoinColumn(name = "ID_SUBESTACAO", nullable = false)
---	private Substacao substacao;
--+	private Subestacao subestacao;
-- 
-- 	public RedeMT() {}
-- 	
---	public RedeMT(int idRedeMt, String codigo, String nome, double tensaoNominal) {
---		super();
---		this.idRedeMt = idRedeMt;
---		this.codigo = codigo;
---		this.nome = nome;
---		this.tensaoNominal = tensaoNominal;
---	}
--+	public RedeMT(Integer idRedeMt, String codigo, String nome, BigDecimal tensaoNominal, Subestacao subestacao) {
--+        this.idRedeMt = idRedeMt;
--+        this.codigo = codigo;
--+        this.nome = nome;
--+        this.tensaoNominal = tensaoNominal;
--+        this.subestacao = subestacao;
--+    }
--+    public Integer getIdRedeMt() {
--+        return idRedeMt;
--+    }
--+
--+    public void setIdRedeMt(Integer idRedeMt) {
--+        this.idRedeMt = idRedeMt;
--+    }
-- 
---	public int getIdRedeMt() {
---		return idRedeMt;
---	}
--+    public String getCodigo() {
--+        return codigo;
--+    }
-- 
---	public void setIdRedeMt(int idRedeMt) {
---		this.idRedeMt = idRedeMt;
---	}
--+    public void setCodigo(String codigo) {
--+        this.codigo = codigo;
--+    }
-- 
---	public String getCodigo() {
---		return codigo;
---	}
--+    public String getNome() {
--+        return nome;
--+    }
-- 
---	public void setCodigo(String codigo) {
---		this.codigo = codigo;
---	}
--+    public void setNome(String nome) {
--+        this.nome = nome;
--+    }
-- 
---	public String getNome() {
---		return nome;
---	}
--+    public BigDecimal getTensaoNominal() {
--+        return tensaoNominal;
--+    }
-- 
---	public void setNome(String nome) {
---		this.nome = nome;
---	}
--+    public void setTensaoNominal(BigDecimal tensaoNominal) {
--+        this.tensaoNominal = tensaoNominal;
--+    }
-- 
---	public double getTensaoNominal() {
---		return tensaoNominal;
---	}
--+    public Subestacao getSubstacao() {
--+        return subestacao;
--+    }
-- 
---	public void setTensaoNominal(double tensaoNominal) {
---		this.tensaoNominal = tensaoNominal;
---	}
--+    public void setSubstacao(Subestacao subestacao) {
--+        this.subestacao = subestacao;
--+    }
-- 	
-- 	
-- }
--\ No newline at end of file
--diff --git a/spring_backend/src/main/java/testevaga/model/Subestacao.java b/spring_backend/src/main/java/testevaga/model/Subestacao.java
--index fdb8c83..b5d2108 100644
----- a/spring_backend/src/main/java/testevaga/model/Subestacao.java
--+++ b/spring_backend/src/main/java/testevaga/model/Subestacao.java
--@@ -1,5 +1,6 @@
-- package testevaga.model;
-- 
--+import java.math.BigDecimal;
-- import java.util.ArrayList;
-- import java.util.List;
-- 
--@@ -15,20 +16,13 @@ import jakarta.persistence.Table;
-- 
-- @Entity
-- @Table(name = "TB_SUBESTACAO")
---public class Substacao {
---/*
--- * ID_SUBESTACAO int(11) NOT NULL AUTO_INCREMENT, 
--- *CODIGO        varchar(3) NOT NULL UNIQUE, 
--- *NOME          varchar(100), 
--- *LATITUDE      decimal(15, 13) NOT NULL, 
--- *LONGITUDE     decimal(15, 13), 
--- *PRIMARY KEY (ID_SUBESTACAO)); 
--- * */
--+public class Subestacao {
--+
-- 	
-- 	@Id
-- 	@GeneratedValue(strategy = GenerationType.IDENTITY)
---	@Column(name = "ID_SUBESTACAO", length = 11)
---	private int idSubstacao;
--+	@Column(name = "ID_SUBESTACAO")
--+	private Integer idSubestacao;
-- 	
-- 	@Column(name = "CODIGO", length = 3, nullable = false, unique = true)
-- 	private String codigo;
--@@ -37,21 +31,21 @@ public class Substacao {
-- 	private String nome;
-- 	
-- 	@Column(name ="LATITUDE", precision = 15, scale = 13, nullable = false )
---	private double latitude;
--+	private BigDecimal latitude;
-- 	
-- 	@Column(name = "LONGITUDE", precision = 15, scale = 13)
---	private Double longitude;
--+	private BigDecimal longitude;
-- 	
---	@OneToMany(mappedBy = "substacao", cascade = CascadeType.ALL, orphanRemoval = true)
--+	@OneToMany(mappedBy = "subestacao", cascade = CascadeType.ALL, orphanRemoval = true)
-- 	private List<RedeMT> redesMT = new ArrayList<RedeMT>();
-- 	
-- 	
---	public Substacao() {}
--+	public Subestacao() {}
-- 	
-- 	
---	public Substacao(int idSubstacao, String codigo, String nome, double latitude, Double longitude) {
--+	public Subestacao(Integer idSubestacao, String codigo, String nome, BigDecimal latitude, BigDecimal longitude) {
-- 		super();
---		this.idSubstacao = idSubstacao;
--+		this.idSubestacao = idSubestacao;
-- 		this.codigo = codigo;
-- 		this.nome = nome;
-- 		this.latitude = latitude;
--@@ -59,12 +53,12 @@ public class Substacao {
-- 	}
-- 
-- 	
---	public int getIdSubstacao() {
---		return idSubstacao;
--+	public Integer getIdSubstacao() {
--+		return idSubestacao;
-- 	}
-- 
---	public void setIdSubstacao(int idSubstacao) {
---		this.idSubstacao = idSubstacao;
--+	public void setIdSubstacao(Integer idSubestacao) {
--+		this.idSubestacao = idSubestacao;
-- 	}
-- 
-- 	public String getCodigo() {
--@@ -83,19 +77,19 @@ public class Substacao {
-- 		this.nome = nome;
-- 	}
-- 
---	public double getLatitude() {
--+	public BigDecimal getLatitude() {
-- 		return latitude;
-- 	}
-- 
---	public void setLatitude(double latitude) {
--+	public void setLatitude(BigDecimal latitude) {
-- 		this.latitude = latitude;
-- 	}
-- 
---	public Double getLONGITUDE() {
--+	public BigDecimal getLONGITUDE() {
-- 		return longitude;
-- 	}
-- 
---	public void setLONGITUDE(Double longitude) {
--+	public void setLONGITUDE(BigDecimal longitude) {
-- 		this.longitude = longitude;
-- 	}
-- 	
--diff --git a/spring_backend/src/main/java/testevaga/repository/H2Repository.java b/spring_backend/src/main/java/testevaga/repository/H2Repository.java
--index 1138c8d..0d50de5 100644
----- a/spring_backend/src/main/java/testevaga/repository/H2Repository.java
--+++ b/spring_backend/src/main/java/testevaga/repository/H2Repository.java
--@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
-- import org.springframework.data.jpa.repository.JpaRepository;
-- import org.springframework.stereotype.Repository;
-- 
---import testevaga.model.Substacao;
--+import testevaga.model.Subestacao;
-- 
-- @Repository
---@Qualifier("h2Data")
---public interface H2Repository extends JpaRepository<Substacao, Integer> {
--+@Qualifier("h2DataSource")
--+public interface H2Repository extends JpaRepository<Subestacao, Integer> {
-- 
-- }
--diff --git a/spring_backend/src/main/java/testevaga/service/SubestacaoService.java b/spring_backend/src/main/java/testevaga/service/SubestacaoService.java
--index e317293..fc4842b 100644
----- a/spring_backend/src/main/java/testevaga/service/SubestacaoService.java
--+++ b/spring_backend/src/main/java/testevaga/service/SubestacaoService.java
--@@ -4,20 +4,20 @@ import java.util.List;
-- 
-- import org.springframework.stereotype.Service;
-- 
---import testevaga.model.Substacao;
--+import testevaga.model.Subestacao;
-- import testevaga.repository.H2Repository;
-- 
-- @Service
---public class SubstacaoService {
--+public class SubestacaoService {
-- 
-- 	private H2Repository h2Repository;
-- 
---	public SubstacaoService(H2Repository h2Repository) {
---		super();
--+	public SubestacaoService(H2Repository h2Repository) {
--+
-- 		this.h2Repository = h2Repository;
-- 	}
-- 	
---	public List<Substacao> listarTodas() {
--+	public List<Subestacao> listarTodas() {
-- 		return h2Repository.findAll();
-- 	}
-- 	
+@@ -1,474 +0,0 @@
+-diff --git a/difGIT.txt b/difGIT.txt
+-index 5e55f6d..e69de29 100644
+---- a/difGIT.txt
+-+++ b/difGIT.txt
+-@@ -1,443 +0,0 @@
+--diff --git a/spring_backend/src/main/java/testevaga/config/DataSourceConfig.java b/spring_backend/src/main/java/testevaga/config/DataSourceConfig.java
+--index ea87fc9..2aa5e8a 100644
+----- a/spring_backend/src/main/java/testevaga/config/DataSourceConfig.java
+--+++ b/spring_backend/src/main/java/testevaga/config/DataSourceConfig.java
+--@@ -1,5 +1,7 @@
+-- package testevaga.config;
+-- 
+--+import javax.sql.DataSource;
+--+
+-- import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+-- import org.springframework.boot.context.properties.ConfigurationProperties;
+-- import org.springframework.context.annotation.Bean;
+--@@ -9,12 +11,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
+-- @Configuration
+-- public class DataSourceConfig {
+-- 	
+---	@Bean(name = "h2Data")
+---	@ConfigurationProperties(prefix = "spring.datasource")
+---	DataSourceAutoConfiguration h2Data() {
+---		return new DataSourceAutoConfiguration();
+---	}
+---	
+---	
+---	
+--+	@Bean(name = "h2DataSource")
+--+    @ConfigurationProperties(prefix = "spring.datasource")
+--+    public DataSource h2DataSource() {
+--+        return new DriverManagerDataSource();
+--+    
+-- }
+--+}
+--\ No newline at end of file
+--diff --git a/spring_backend/src/main/java/testevaga/controller/TesteCotroller.java b/spring_backend/src/main/java/testevaga/controller/TesteCotroller.java
+--index 71c9d71..910643c 100644
+----- a/spring_backend/src/main/java/testevaga/controller/TesteCotroller.java
+--+++ b/spring_backend/src/main/java/testevaga/controller/TesteCotroller.java
+--@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.GetMapping;
+-- import org.springframework.web.bind.annotation.RequestMapping;
+-- import org.springframework.web.bind.annotation.RestController;
+-- 
+---import testevaga.model.Substacao;
+---import testevaga.service.SubstacaoService;
+--+import testevaga.model.Subestacao;
+--+import testevaga.service.SubestacaoService;
+-- 
+-- @RestController
+-- @RequestMapping("/testando")
+-- public class TesteCotroller {
+---	private SubstacaoService substacaoService;
+--+	private SubestacaoService substacaoService;
+-- 	
+-- 	
+---	public TesteCotroller(SubstacaoService substacaoService) {
+--+	public TesteCotroller(SubestacaoService substacaoService) {
+-- 		this.substacaoService = substacaoService;
+-- 	}
+-- 
+-- 
+-- 	@GetMapping
+---	public List<Substacao> listTodas() {
+--+	public List<Subestacao> listTodas() {
+-- 		return substacaoService.listarTodas();
+-- 	}
+-- 
+--diff --git a/spring_backend/src/main/java/testevaga/model/RedeMT.java b/spring_backend/src/main/java/testevaga/model/RedeMT.java
+--index 5f187a2..631b1d2 100644
+----- a/spring_backend/src/main/java/testevaga/model/RedeMT.java
+--+++ b/spring_backend/src/main/java/testevaga/model/RedeMT.java
+--@@ -1,5 +1,7 @@
+-- package testevaga.model;
+-- 
+--+import java.math.BigDecimal;
+--+
+-- import jakarta.persistence.Column;
+-- import jakarta.persistence.Entity;
+-- import jakarta.persistence.GeneratedValue;
+--@@ -12,22 +14,11 @@ import jakarta.persistence.Table;
+-- @Entity
+-- @Table(name = "TB_REDE_MT")
+-- public class RedeMT {
+---	/*
+---	 * CREATE TABLE TB_REDE_MT (
+---	 * ID_REDE_MT     int(11) NOT NULL AUTO_INCREMENT, 
+---	 * ID_SUBESTACAO  int(11) NOT NULL, 
+---	 * CODIGO         varchar(5) NOT NULL UNIQUE, 
+---	 * NOME           varchar(100), 
+---	 * TENSAO_NOMINAL decimal(5, 2), 
+---	 * PRIMARY KEY (ID_REDE_MT));
+---	 * ALTER TABLE TB_REDE_MT ADD CONSTRAINT 
+---	 * FK_SUBESTACAO_REDE_MT FOREIGN KEY (ID_SUBESTACAO) 
+---	 * REFERENCES TB_SUBESTACAO (ID_SUBESTACAO) ON DELETE Cascade; 
+---	 * */
+--+
+-- 	@Id
+-- 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+-- 	@Column(name = "ID_REDE_MT")
+---	private int idRedeMt;
+--+	private Integer idRedeMt;
+-- 	
+-- 	@Column(name = "CODIGO", nullable = false, length = 5, unique = true)
+-- 	private String codigo;
+--@@ -36,53 +27,60 @@ public class RedeMT {
+-- 	private String nome;
+-- 	
+-- 	@Column(name = "TENSAO_NOMINAL", precision = 5, scale = 2)
+---	private double tensaoNominal;
+--+	private BigDecimal tensaoNominal;
+-- 	
+-- 	@ManyToOne
+-- 	@JoinColumn(name = "ID_SUBESTACAO", nullable = false)
+---	private Substacao substacao;
+--+	private Subestacao subestacao;
+-- 
+-- 	public RedeMT() {}
+-- 	
+---	public RedeMT(int idRedeMt, String codigo, String nome, double tensaoNominal) {
+---		super();
+---		this.idRedeMt = idRedeMt;
+---		this.codigo = codigo;
+---		this.nome = nome;
+---		this.tensaoNominal = tensaoNominal;
+---	}
+--+	public RedeMT(Integer idRedeMt, String codigo, String nome, BigDecimal tensaoNominal, Subestacao subestacao) {
+--+        this.idRedeMt = idRedeMt;
+--+        this.codigo = codigo;
+--+        this.nome = nome;
+--+        this.tensaoNominal = tensaoNominal;
+--+        this.subestacao = subestacao;
+--+    }
+--+    public Integer getIdRedeMt() {
+--+        return idRedeMt;
+--+    }
+--+
+--+    public void setIdRedeMt(Integer idRedeMt) {
+--+        this.idRedeMt = idRedeMt;
+--+    }
+-- 
+---	public int getIdRedeMt() {
+---		return idRedeMt;
+---	}
+--+    public String getCodigo() {
+--+        return codigo;
+--+    }
+-- 
+---	public void setIdRedeMt(int idRedeMt) {
+---		this.idRedeMt = idRedeMt;
+---	}
+--+    public void setCodigo(String codigo) {
+--+        this.codigo = codigo;
+--+    }
+-- 
+---	public String getCodigo() {
+---		return codigo;
+---	}
+--+    public String getNome() {
+--+        return nome;
+--+    }
+-- 
+---	public void setCodigo(String codigo) {
+---		this.codigo = codigo;
+---	}
+--+    public void setNome(String nome) {
+--+        this.nome = nome;
+--+    }
+-- 
+---	public String getNome() {
+---		return nome;
+---	}
+--+    public BigDecimal getTensaoNominal() {
+--+        return tensaoNominal;
+--+    }
+-- 
+---	public void setNome(String nome) {
+---		this.nome = nome;
+---	}
+--+    public void setTensaoNominal(BigDecimal tensaoNominal) {
+--+        this.tensaoNominal = tensaoNominal;
+--+    }
+-- 
+---	public double getTensaoNominal() {
+---		return tensaoNominal;
+---	}
+--+    public Subestacao getSubstacao() {
+--+        return subestacao;
+--+    }
+-- 
+---	public void setTensaoNominal(double tensaoNominal) {
+---		this.tensaoNominal = tensaoNominal;
+---	}
+--+    public void setSubstacao(Subestacao subestacao) {
+--+        this.subestacao = subestacao;
+--+    }
+-- 	
+-- 	
+-- }
+--\ No newline at end of file
+--diff --git a/spring_backend/src/main/java/testevaga/model/Subestacao.java b/spring_backend/src/main/java/testevaga/model/Subestacao.java
+--index fdb8c83..b5d2108 100644
+----- a/spring_backend/src/main/java/testevaga/model/Subestacao.java
+--+++ b/spring_backend/src/main/java/testevaga/model/Subestacao.java
+--@@ -1,5 +1,6 @@
+-- package testevaga.model;
+-- 
+--+import java.math.BigDecimal;
+-- import java.util.ArrayList;
+-- import java.util.List;
+-- 
+--@@ -15,20 +16,13 @@ import jakarta.persistence.Table;
+-- 
+-- @Entity
+-- @Table(name = "TB_SUBESTACAO")
+---public class Substacao {
+---/*
+--- * ID_SUBESTACAO int(11) NOT NULL AUTO_INCREMENT, 
+--- *CODIGO        varchar(3) NOT NULL UNIQUE, 
+--- *NOME          varchar(100), 
+--- *LATITUDE      decimal(15, 13) NOT NULL, 
+--- *LONGITUDE     decimal(15, 13), 
+--- *PRIMARY KEY (ID_SUBESTACAO)); 
+--- * */
+--+public class Subestacao {
+--+
+-- 	
+-- 	@Id
+-- 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+---	@Column(name = "ID_SUBESTACAO", length = 11)
+---	private int idSubstacao;
+--+	@Column(name = "ID_SUBESTACAO")
+--+	private Integer idSubestacao;
+-- 	
+-- 	@Column(name = "CODIGO", length = 3, nullable = false, unique = true)
+-- 	private String codigo;
+--@@ -37,21 +31,21 @@ public class Substacao {
+-- 	private String nome;
+-- 	
+-- 	@Column(name ="LATITUDE", precision = 15, scale = 13, nullable = false )
+---	private double latitude;
+--+	private BigDecimal latitude;
+-- 	
+-- 	@Column(name = "LONGITUDE", precision = 15, scale = 13)
+---	private Double longitude;
+--+	private BigDecimal longitude;
+-- 	
+---	@OneToMany(mappedBy = "substacao", cascade = CascadeType.ALL, orphanRemoval = true)
+--+	@OneToMany(mappedBy = "subestacao", cascade = CascadeType.ALL, orphanRemoval = true)
+-- 	private List<RedeMT> redesMT = new ArrayList<RedeMT>();
+-- 	
+-- 	
+---	public Substacao() {}
+--+	public Subestacao() {}
+-- 	
+-- 	
+---	public Substacao(int idSubstacao, String codigo, String nome, double latitude, Double longitude) {
+--+	public Subestacao(Integer idSubestacao, String codigo, String nome, BigDecimal latitude, BigDecimal longitude) {
+-- 		super();
+---		this.idSubstacao = idSubstacao;
+--+		this.idSubestacao = idSubestacao;
+-- 		this.codigo = codigo;
+-- 		this.nome = nome;
+-- 		this.latitude = latitude;
+--@@ -59,12 +53,12 @@ public class Substacao {
+-- 	}
+-- 
+-- 	
+---	public int getIdSubstacao() {
+---		return idSubstacao;
+--+	public Integer getIdSubstacao() {
+--+		return idSubestacao;
+-- 	}
+-- 
+---	public void setIdSubstacao(int idSubstacao) {
+---		this.idSubstacao = idSubstacao;
+--+	public void setIdSubstacao(Integer idSubestacao) {
+--+		this.idSubestacao = idSubestacao;
+-- 	}
+-- 
+-- 	public String getCodigo() {
+--@@ -83,19 +77,19 @@ public class Substacao {
+-- 		this.nome = nome;
+-- 	}
+-- 
+---	public double getLatitude() {
+--+	public BigDecimal getLatitude() {
+-- 		return latitude;
+-- 	}
+-- 
+---	public void setLatitude(double latitude) {
+--+	public void setLatitude(BigDecimal latitude) {
+-- 		this.latitude = latitude;
+-- 	}
+-- 
+---	public Double getLONGITUDE() {
+--+	public BigDecimal getLONGITUDE() {
+-- 		return longitude;
+-- 	}
+-- 
+---	public void setLONGITUDE(Double longitude) {
+--+	public void setLONGITUDE(BigDecimal longitude) {
+-- 		this.longitude = longitude;
+-- 	}
+-- 	
+--diff --git a/spring_backend/src/main/java/testevaga/repository/H2Repository.java b/spring_backend/src/main/java/testevaga/repository/H2Repository.java
+--index 1138c8d..0d50de5 100644
+----- a/spring_backend/src/main/java/testevaga/repository/H2Repository.java
+--+++ b/spring_backend/src/main/java/testevaga/repository/H2Repository.java
+--@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
+-- import org.springframework.data.jpa.repository.JpaRepository;
+-- import org.springframework.stereotype.Repository;
+-- 
+---import testevaga.model.Substacao;
+--+import testevaga.model.Subestacao;
+-- 
+-- @Repository
+---@Qualifier("h2Data")
+---public interface H2Repository extends JpaRepository<Substacao, Integer> {
+--+@Qualifier("h2DataSource")
+--+public interface H2Repository extends JpaRepository<Subestacao, Integer> {
+-- 
+-- }
+--diff --git a/spring_backend/src/main/java/testevaga/service/SubestacaoService.java b/spring_backend/src/main/java/testevaga/service/SubestacaoService.java
+--index e317293..fc4842b 100644
+----- a/spring_backend/src/main/java/testevaga/service/SubestacaoService.java
+--+++ b/spring_backend/src/main/java/testevaga/service/SubestacaoService.java
+--@@ -4,20 +4,20 @@ import java.util.List;
+-- 
+-- import org.springframework.stereotype.Service;
+-- 
+---import testevaga.model.Substacao;
+--+import testevaga.model.Subestacao;
+-- import testevaga.repository.H2Repository;
+-- 
+-- @Service
+---public class SubstacaoService {
+--+public class SubestacaoService {
+-- 
+-- 	private H2Repository h2Repository;
+-- 
+---	public SubstacaoService(H2Repository h2Repository) {
+---		super();
+--+	public SubestacaoService(H2Repository h2Repository) {
+--+
+-- 		this.h2Repository = h2Repository;
+-- 	}
+-- 	
+---	public List<Substacao> listarTodas() {
+--+	public List<Subestacao> listarTodas() {
+-- 		return h2Repository.findAll();
+-- 	}
+-- 	
+--diff --git a/spring_backend/src/main/resources/application.properties b/spring_backend/src/main/resources/application.properties
+--index 29c8d37..dc7a065 100644
+----- a/spring_backend/src/main/resources/application.properties
+--+++ b/spring_backend/src/main/resources/application.properties
+--@@ -2,10 +2,11 @@ spring.application.name=sinapsisprocesso
+-- # ===============================
+-- # H2 mem db
+-- # ===============================
+---spring.datasource.url=jdbc:h2:mem:sinapsisdb
+--+spring.datasource.url=jdbc:h2:mem:testdb
+-- spring.datasource.driver-class-name=org.h2.Driver
+-- spring.datasource.username=sa
+-- spring.datasource.password=
+--+spring.sql.init.mode=always
+-- spring.sql.init.platform=h2
+-- spring.h2.console.enabled=true
+-- spring.h2.console.path=/h2
+--@@ -14,16 +15,18 @@ spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+-- # ===============================
+-- # mysql persistence db
+-- # ===============================
+---spring.datasource.mysql.url=jdbc:mysql://localhost:3306/sinapsis
+---spring.datasource.mysql.username=root
+---spring.datasource.mysql.password=131808
+---spring.datasource.mysql.platform=mysql
+---spring.datasource.mysql.driver-class-name=com.mysql.cj.jdbc.Driver
+--+#spring.datasource.mysql.url=jdbc:mysql://localhost:3306/sinapsis
+--+#spring.datasource.mysql.username=root
+--+#spring.datasource.mysql.password=131808
+--+#spring.datasource.mysql.platform=mysql
+--+#spring.datasource.mysql.driver-class-name=com.mysql.cj.jdbc.Driver
+--+
+-- 
+-- 
+---spring.sql.init.mode=always
+---spring.output.ansi.enabled=always
+-- 
+--+
+--+
+--+spring.output.ansi.enabled=always
+-- spring.mvc.log-request-details=true
+-- 
+-- #logging.file.name=log/app.log
+--diff --git a/spring_backend/src/main/resources/data.sql b/spring_backend/src/main/resources/data.sql
+--index f789b0d..dca99dc 100644
+----- a/spring_backend/src/main/resources/data.sql
+--+++ b/spring_backend/src/main/resources/data.sql
+--@@ -1,4 +1,4 @@
+-----DADOS INICIAIS
+--+
+-- INSERT INTO TB_SUBESTACAO(ID_SUBESTACAO, CODIGO, NOME, LATITUDE, LONGITUDE) VALUES (1,'AML','Subestação A', -23.2744134389987, -49.4702838173763);
+-- INSERT INTO TB_SUBESTACAO(ID_SUBESTACAO, CODIGO, NOME, LATITUDE, LONGITUDE) VALUES (2,'MKP','Subestação B', -22.6999266804592, -46.996111878849);
+-- INSERT INTO TB_SUBESTACAO(ID_SUBESTACAO, CODIGO, NOME, LATITUDE, LONGITUDE) VALUES (3,'ZFA','Subestação C', -23.0917377538889, -48.9241617522699);
+--diff --git a/spring_backend/src/main/resources/schema.sql b/spring_backend/src/main/resources/schema.sql
+--index 2369dcd..837429f 100644
+----- a/spring_backend/src/main/resources/schema.sql
+--+++ b/spring_backend/src/main/resources/schema.sql
+--@@ -1,17 +1,21 @@
+-- CREATE TABLE TB_SUBESTACAO (
+---  ID_SUBESTACAO int(11) NOT NULL AUTO_INCREMENT, 
+---  CODIGO        varchar(3) NOT NULL UNIQUE, 
+---  NOME          varchar(100), 
+---  LATITUDE      decimal(15, 13) NOT NULL, 
+---  LONGITUDE     decimal(15, 13), 
+---  PRIMARY KEY (ID_SUBESTACAO));
+---  
+--+  ID_SUBESTACAO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--+  CODIGO VARCHAR(3) NOT NULL UNIQUE, 
+--+  NOME VARCHAR(100), 
+--+  LATITUDE DECIMAL(15, 13) NOT NULL, 
+--+  LONGITUDE DECIMAL(15, 13)
+--+);
+--+
+-- CREATE TABLE TB_REDE_MT (
+---  ID_REDE_MT     int(11) NOT NULL AUTO_INCREMENT, 
+---  ID_SUBESTACAO  int(11) NOT NULL, 
+---  CODIGO         varchar(5) NOT NULL UNIQUE, 
+---  NOME           varchar(100), 
+---  TENSAO_NOMINAL decimal(5, 2), 
+---  PRIMARY KEY (ID_REDE_MT));
+--+  ID_REDE_MT INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--+  ID_SUBESTACAO INT NOT NULL, 
+--+  CODIGO VARCHAR(5) NOT NULL UNIQUE, 
+--+  NOME VARCHAR(100), 
+--+  TENSAO_NOMINAL DECIMAL(5, 2)
+--+);
+-- 
+---ALTER TABLE TB_REDE_MT ADD CONSTRAINT FK_SUBESTACAO_REDE_MT FOREIGN KEY (ID_SUBESTACAO) REFERENCES TB_SUBESTACAO (ID_SUBESTACAO) ON DELETE Cascade;
+--\ No newline at end of file
+--+ALTER TABLE TB_REDE_MT 
+--+ADD CONSTRAINT FK_SUBESTACAO_REDE_MT 
+--+FOREIGN KEY (ID_SUBESTACAO) 
+--+REFERENCES TB_SUBESTACAO (ID_SUBESTACAO) 
+--+ON DELETE CASCADE;
 -diff --git a/spring_backend/src/main/resources/application.properties b/spring_backend/src/main/resources/application.properties
--index 29c8d37..dc7a065 100644
+-index dc7a065..f79100f 100644
 ---- a/spring_backend/src/main/resources/application.properties
 -+++ b/spring_backend/src/main/resources/application.properties
--@@ -2,10 +2,11 @@ spring.application.name=sinapsisprocesso
+-@@ -2,7 +2,8 @@ spring.application.name=sinapsisprocesso
 - # ===============================
 - # H2 mem db
 - # ===============================
---spring.datasource.url=jdbc:h2:mem:sinapsisdb
--+spring.datasource.url=jdbc:h2:mem:testdb
+--spring.datasource.url=jdbc:h2:mem:testdb
+-+spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+-+
 - spring.datasource.driver-class-name=org.h2.Driver
 - spring.datasource.username=sa
 - spring.datasource.password=
--+spring.sql.init.mode=always
-- spring.sql.init.platform=h2
-- spring.h2.console.enabled=true
-- spring.h2.console.path=/h2
--@@ -14,16 +15,18 @@ spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
-- # ===============================
-- # mysql persistence db
-- # ===============================
---spring.datasource.mysql.url=jdbc:mysql://localhost:3306/sinapsis
---spring.datasource.mysql.username=root
---spring.datasource.mysql.password=131808
---spring.datasource.mysql.platform=mysql
---spring.datasource.mysql.driver-class-name=com.mysql.cj.jdbc.Driver
--+#spring.datasource.mysql.url=jdbc:mysql://localhost:3306/sinapsis
--+#spring.datasource.mysql.username=root
--+#spring.datasource.mysql.password=131808
--+#spring.datasource.mysql.platform=mysql
--+#spring.datasource.mysql.driver-class-name=com.mysql.cj.jdbc.Driver
--+
+-@@ -21,8 +22,10 @@ spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+- #spring.datasource.mysql.platform=mysql
+- #spring.datasource.mysql.driver-class-name=com.mysql.cj.jdbc.Driver
+- 
+-+spring.sql.init.schema-locations=classpath:schema.sql
+-+spring.sql.init.data-locations=classpath:data.sql
+- 
+--
+-+spring.jpa.hibernate.ddl-auto=none
 - 
 - 
---spring.sql.init.mode=always
---spring.output.ansi.enabled=always
 - 
--+
--+
--+spring.output.ansi.enabled=always
-- spring.mvc.log-request-details=true
-- 
-- #logging.file.name=log/app.log
--diff --git a/spring_backend/src/main/resources/data.sql b/spring_backend/src/main/resources/data.sql
--index f789b0d..dca99dc 100644
----- a/spring_backend/src/main/resources/data.sql
--+++ b/spring_backend/src/main/resources/data.sql
--@@ -1,4 +1,4 @@
-----DADOS INICIAIS
--+
-- INSERT INTO TB_SUBESTACAO(ID_SUBESTACAO, CODIGO, NOME, LATITUDE, LONGITUDE) VALUES (1,'AML','Subestação A', -23.2744134389987, -49.4702838173763);
-- INSERT INTO TB_SUBESTACAO(ID_SUBESTACAO, CODIGO, NOME, LATITUDE, LONGITUDE) VALUES (2,'MKP','Subestação B', -22.6999266804592, -46.996111878849);
-- INSERT INTO TB_SUBESTACAO(ID_SUBESTACAO, CODIGO, NOME, LATITUDE, LONGITUDE) VALUES (3,'ZFA','Subestação C', -23.0917377538889, -48.9241617522699);
--diff --git a/spring_backend/src/main/resources/schema.sql b/spring_backend/src/main/resources/schema.sql
--index 2369dcd..837429f 100644
----- a/spring_backend/src/main/resources/schema.sql
--+++ b/spring_backend/src/main/resources/schema.sql
--@@ -1,17 +1,21 @@
-- CREATE TABLE TB_SUBESTACAO (
---  ID_SUBESTACAO int(11) NOT NULL AUTO_INCREMENT, 
---  CODIGO        varchar(3) NOT NULL UNIQUE, 
---  NOME          varchar(100), 
---  LATITUDE      decimal(15, 13) NOT NULL, 
---  LONGITUDE     decimal(15, 13), 
---  PRIMARY KEY (ID_SUBESTACAO));
---  
--+  ID_SUBESTACAO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
--+  CODIGO VARCHAR(3) NOT NULL UNIQUE, 
--+  NOME VARCHAR(100), 
--+  LATITUDE DECIMAL(15, 13) NOT NULL, 
--+  LONGITUDE DECIMAL(15, 13)
--+);
--+
-- CREATE TABLE TB_REDE_MT (
---  ID_REDE_MT     int(11) NOT NULL AUTO_INCREMENT, 
---  ID_SUBESTACAO  int(11) NOT NULL, 
---  CODIGO         varchar(5) NOT NULL UNIQUE, 
---  NOME           varchar(100), 
---  TENSAO_NOMINAL decimal(5, 2), 
---  PRIMARY KEY (ID_REDE_MT));
--+  ID_REDE_MT INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
--+  ID_SUBESTACAO INT NOT NULL, 
--+  CODIGO VARCHAR(5) NOT NULL UNIQUE, 
--+  NOME VARCHAR(100), 
--+  TENSAO_NOMINAL DECIMAL(5, 2)
--+);
-- 
---ALTER TABLE TB_REDE_MT ADD CONSTRAINT FK_SUBESTACAO_REDE_MT FOREIGN KEY (ID_SUBESTACAO) REFERENCES TB_SUBESTACAO (ID_SUBESTACAO) ON DELETE Cascade;
--\ No newline at end of file
--+ALTER TABLE TB_REDE_MT 
--+ADD CONSTRAINT FK_SUBESTACAO_REDE_MT 
--+FOREIGN KEY (ID_SUBESTACAO) 
--+REFERENCES TB_SUBESTACAO (ID_SUBESTACAO) 
--+ON DELETE CASCADE;
-diff --git a/spring_backend/src/main/resources/application.properties b/spring_backend/src/main/resources/application.properties
-index dc7a065..f79100f 100644
---- a/spring_backend/src/main/resources/application.properties
-+++ b/spring_backend/src/main/resources/application.properties
-@@ -2,7 +2,8 @@ spring.application.name=sinapsisprocesso
- # ===============================
- # H2 mem db
- # ===============================
--spring.datasource.url=jdbc:h2:mem:testdb
-+spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+diff --git a/vue_frontend/index.html b/vue_frontend/index.html
+index 795e4fb..a876669 100644
+--- a/vue_frontend/index.html
++++ b/vue_frontend/index.html
+@@ -4,7 +4,7 @@
+     <meta charset="UTF-8" />
+     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+-    <title>Vite + Vue</title>
++    <title>sinapsis</title>
+   </head>
+   <body>
+     <div id="app"></div>
+diff --git a/vue_frontend/src/App.vue b/vue_frontend/src/App.vue
+index 2585d81..937f939 100644
+--- a/vue_frontend/src/App.vue
++++ b/vue_frontend/src/App.vue
+@@ -4,47 +4,33 @@ import { ref } from 'vue';
+ import { useToast } from "vue-toastification";
+ 
+ const toast = useToast();
+-const msg = ref('');
+-const spring = async () => {        
+-    try {
+-		await fetch('http://localhost:5000/api')        
+-		        .then(response => response.json())        
+-		        .then(data => msg.value = data.msg);
+-				toast.success("success get msg from spring ***", {
+-				        timeout: 2000});
+-	} catch (error) {
+-		toast.error(error.message);
+-	}
++const substacoes = ref([]);
++const fetchData = async () => {
++  try {
++    const response = await fetch('http://localhost:5000/testando');
++    if (!response.ok) {
++      throw new Error('Network response was not ok');
++    }
++    const data = await response.json();
++    substacoes.value = data;
++    toast.success("Successfully fetched data from Spring", {
++      timeout: 2000
++    });
++  } catch (error) {
++    toast.error(error.message);
++  }
+ };
+-spring();
+ 
+-const count = ref(0);
+-</script>
++fetchData();
 +
- spring.datasource.driver-class-name=org.h2.Driver
- spring.datasource.username=sa
- spring.datasource.password=
-@@ -21,8 +22,10 @@ spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
- #spring.datasource.mysql.platform=mysql
- #spring.datasource.mysql.driver-class-name=com.mysql.cj.jdbc.Driver
++</script> 
  
-+spring.sql.init.schema-locations=classpath:schema.sql
-+spring.sql.init.data-locations=classpath:data.sql
+ <template>
+-  <div>
+-    <a href="https://vite.dev" target="_blank">
+-      <img src="/vite.svg" class="logo" alt="Vite logo" />
+-    </a>
+-    <a href="https://vuejs.org/" target="_blank">
+-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+-    </a>
+-  </div>
+-  <HelloWorld :msg="msg" />
++
++  <HelloWorld :substacoes="substacoes" />
+ </template>
  
+ <style scoped>
+-.logo {
+-  height: 6em;
+-  text-size-adjust: 18px;
+-  padding: 1.5em;
+-  will-change: filter;
+-  transition: filter 300ms;
+-}
+-.logo:hover {
+-  filter: drop-shadow(0 0 2em #646cffaa);
+-}
+-.logo.vue:hover {
+-  filter: drop-shadow(0 0 2em #42b883aa);
+-}
++
+ </style>
++
+diff --git a/vue_frontend/src/components/HelloWorld.vue b/vue_frontend/src/components/HelloWorld.vue
+index 546ebbc..32a7b93 100644
+--- a/vue_frontend/src/components/HelloWorld.vue
++++ b/vue_frontend/src/components/HelloWorld.vue
+@@ -1,43 +1,23 @@
+ <script setup>
+-import { ref } from 'vue'
++import { defineProps } from 'vue';
+ 
+-defineProps({
+-  msg: String,
+-})
 -
-+spring.jpa.hibernate.ddl-auto=none
+-const count = ref(0)
++const props = defineProps({
++  substacoes: Array
++});
+ </script>
  
+ <template>
+-  <h1>{{ msg }}</h1>
+-
+-  <div class="card">
+-    <button type="button" @click="count++">count is {{ count }}</button>
+-    <p>
+-      Edit
+-      <code>components/HelloWorld.vue</code> to test HMR
+-    </p>
++  <div v-if="substacoes.length">
++    <div v-for="substacao in substacoes" :key="substacao.idSubstacao">
++      <p>{{ substacao.codigo }} - {{ substacao.nome }}</p>
++      <p>Latitude: {{ substacao.latitude }}</p>
++      <p>Longitude: {{ substacao.longitude }}</p>
++    </div>
++  </div>
++  <div v-else>
++    <p>No data available</p>
+   </div>
+-
+-  <p>
+-    Check out
+-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
+-      >create-vue</a
+-    >, the official Vue + Vite starter
+-  </p>
+-  <p>
+-    Learn more about IDE Support for Vue in the
+-    <a
+-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
+-      target="_blank"
+-      >Vue Docs Scaling up Guide</a
+-    >.
+-  </p>
+-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+ </template>
  
- 
+ <style scoped>
+-.read-the-docs {
+-  color: #888;
+-}
+-</style>
++</style>
+\ No newline at end of file
