@@ -1,6 +1,7 @@
 package testevaga.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -10,17 +11,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import testevaga.model.Substacao;
+import testevaga.service.SubstacaoService;
+
 @RestController
-@RequestMapping("/")
+@RequestMapping("/testando")
 public class TesteCotroller {
+	private SubstacaoService substacaoService;
 	
-	@GetMapping("/api")
-	public ResponseEntity<Map<String, String>> msn() {
-		Map <String, String> response =  Map.of("msg", "teste endpoint");
-		
-		
-		return new ResponseEntity<>(response, HttpStatus.OK);
-		
+	
+	public TesteCotroller(SubstacaoService substacaoService) {
+		this.substacaoService = substacaoService;
+	}
+
+
+	@GetMapping
+	public List<Substacao> listTodas() {
+		return substacaoService.listarTodas();
 	}
 
 }

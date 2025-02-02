@@ -1,4 +1,4 @@
-package testevaga.controller.config;
+package testevaga.config;
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
