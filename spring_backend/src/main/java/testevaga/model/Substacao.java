@@ -35,15 +35,17 @@ public class Substacao {
 	private double latitude;
 	
 	@Column(name = "LONGITUDE", precision = 15, scale = 13)
-	private Double LONGITUDE;
-
-	public Substacao(int idSubstacao, String codigo, String nome, double latitude, Double lONGITUDE) {
+	private Double longitude;
+	
+	public Substacao() {}
+	
+	public Substacao(int idSubstacao, String codigo, String nome, double latitude, Double longitude) {
 		super();
 		this.idSubstacao = idSubstacao;
 		this.codigo = codigo;
 		this.nome = nome;
 		this.latitude = latitude;
-		LONGITUDE = lONGITUDE;
+		this.longitude = longitude;
 	}
 
 	public int getIdSubstacao() {
@@ -79,11 +81,11 @@ public class Substacao {
 	}
 
 	public Double getLONGITUDE() {
-		return LONGITUDE;
+		return longitude;
 	}
 
-	public void setLONGITUDE(Double lONGITUDE) {
-		LONGITUDE = lONGITUDE;
+	public void setLONGITUDE(Double longitude) {
+		this.longitude = longitude;
 	}
 	
 	
