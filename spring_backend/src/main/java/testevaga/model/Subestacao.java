@@ -40,6 +40,7 @@ public class Subestacao {
 	private List<RedeMT> redesMT = new ArrayList<RedeMT>();
 	
 	
+
 	public Subestacao() {}
 	
 	
@@ -53,11 +54,11 @@ public class Subestacao {
 	}
 
 	
-	public Integer getIdSubstacao() {
+	public Integer getIdSubestacao() {
 		return idSubestacao;
 	}
 
-	public void setIdSubstacao(Integer idSubestacao) {
+	public void setIdSubestacao(Integer idSubestacao) {
 		this.idSubestacao = idSubestacao;
 	}
 
@@ -85,15 +86,24 @@ public class Subestacao {
 		this.latitude = latitude;
 	}
 
-	public BigDecimal getLONGITUDE() {
+	public BigDecimal getLongitude() {
 		return longitude;
 	}
 
-	public void setLONGITUDE(BigDecimal longitude) {
+	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
 	
-	
+	public List<RedeMT> getRedesMT() {
+		return redesMT;
+	}
+
+
+	public void setRedesMT(List<RedeMT> redesMT) {
+		this.redesMT = redesMT;
+	}
+
+
 	
 	
 }

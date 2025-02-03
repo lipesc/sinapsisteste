@@ -74,11 +74,11 @@ public class RedeMT {
         this.tensaoNominal = tensaoNominal;
     }
 
-    public Subestacao getSubstacao() {
+    public Subestacao getSubestacao() {
         return subestacao;
     }
 
-    public void setSubstacao(Subestacao subestacao) {
+    public void setSubestacao(Subestacao subestacao) {
         this.subestacao = subestacao;
     }
 	

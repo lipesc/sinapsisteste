@@ -13,7 +13,7 @@ public class DataSourceConfig {
 	
 	@Bean(name = "h2DataSource")
     @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource h2DataSource() {
+    DriverManagerDataSource h2DataSource() {
         return new DriverManagerDataSource();
     
 }
