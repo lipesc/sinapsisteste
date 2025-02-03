@@ -18,6 +18,3 @@ const props = defineProps({
     <p>No data available</p>
   </div>
 </template>
-
-<style scoped>
-</style>

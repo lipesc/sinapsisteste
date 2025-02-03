@@ -1,10 +1,8 @@
 <template>
-
   <SubestacaoForm :substacoes="substacoes" />
 </template>
-
 <script setup>
-import SubestacaoForm from './components/SubestacaoForm.vue'
+import SubestacaoForm from '../components/SubestacaoForm.vue'
 import { ref } from 'vue';
 import { useToast } from "vue-toastification";
 
@@ -27,12 +25,4 @@ const fetchData = async () => {
 };
 
 fetchData();
-
-</script> 
-
-
-
-<style scoped>
-
-</style>
-
+</script>

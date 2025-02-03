@@ -1,20 +1,24 @@
-import { createRouter, createHistory } from 'vue-router';
-import Login from '@views/Login.vue';
-import Lista from '@views/Lista.vue';
-import Inclusao from '@view/Inclusao.vue';
-import Alteracao from '@view/Alteracao.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import Login from "../views/Login.vue";
+import Lista from "../views/Lista.vue";
+import Inclusao from "../views/Inclusao.vue";
+import Alterar from "../views/Alterar.vue";
+import VisualizarMap from "../views/VisualizarMap.vue";
 
 const routes = [
-	{path: '/', component: Login},
-	{path: '/lista', component: Lista},
-	{path: '/inclusao', component: Inclusao},
-	{path: '/alteracao', component: Alteracao},
-	{path: '/visualizar', component: Visualizar}
+	{path: "/", component: Login},
+	{path: "/lista", component: Lista},
+	{path: "/inclusao", component: Inclusao},
+	{path: "/alterar", component: Alterar},
+	{path: "/visualizar", component: VisualizarMap}
 ];
 
+
+
 const router = createRouter({
-	history: createHistory(),
-	routes
+  history: createWebHistory(),
+  routes,
 });
+
 
 export default router;
